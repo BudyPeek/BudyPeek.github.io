@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>El Periódico — Edición Estilo BudyPeek</title>
+<style>
+  :root{
+    --bg:#0d0f12;
+    --bg-soft:#15181c;
+    --accent:#4a9eff;
+    --text:#eaeaea;
+    --muted:#9aa0a6;
+    --border:#22262b;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--text);font-family:'Segoe UI',Arial,sans-serif;line-height:1.4;}
+
+  header{display:flex;align-items:center;justify-content:space-between;padding:14px 30px;
+    background:var(--bg-soft);border-bottom:2px solid var(--accent);position:sticky;top:0;z-index:10;}
+  .logo{font-weight:800;font-size:1.4rem;letter-spacing:1px;color:var(--accent);text-transform:uppercase;}
+  nav{display:flex;gap:22px;flex-wrap:wrap;}
+  nav a{color:var(--text);text-decoration:none;font-size:.85rem;font-weight:600;
+    text-transform:uppercase;letter-spacing:.5px;transition:color .2s;}
+  nav a:hover{color:var(--accent);}
+
+  .ticker{background:var(--accent);color:#fff;font-weight:700;font-size:.85rem;
+    padding:8px 20px;white-space:nowrap;overflow:hidden;}
+  .ticker span{text-transform:uppercase;margin-right:10px;}
+
+  main{max-width:1100px;margin:0 auto;padding:30px 20px 60px;}
+
+  .featured{display:block;position:relative;border-radius:10px;overflow:hidden;
+    margin-bottom:40px;border:1px solid var(--border);box-shadow:0 0 30px rgba(74, 158, 255, 0.3);}
+  .featured img{width:100%;height:380px;object-fit:cover;display:block;filter:brightness(.65);}
+  .featured__caption{position:absolute;bottom:0;left:0;right:0;padding:25px;
+    background:linear-gradient(180deg,transparent,rgba(0,0,0,.9));}
+  .featured__caption .tag{color:var(--accent);font-weight:700;text-transform:uppercase;
+    font-size:.8rem;letter-spacing:1px;}
+  .featured__caption h1{font-size:1.6rem;margin-top:8px;color:#fff;font-weight:800;}
+
+  section h2{font-size:1.1rem;text-transform:uppercase;letter-spacing:1px;color:var(--accent);
+    border-left:4px solid var(--accent);padding-left:10px;margin-bottom:18px;}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px;}
+
+  .story{background:var(--bg-soft);border:1px solid var(--border);border-radius:8px;
+    overflow:hidden;transition:transform .15s,border-color .15s;}
+  .story:hover{transform:translateY(-4px);border-color:var(--accent);}
+  .story a{color:var(--text);text-decoration:none;display:block;}
+  .story__img{height:140px;background-size:cover;background-position:center;background-color:#000;}
+  .story h3{font-size:.92rem;font-weight:600;padding:12px;}
+  .story:hover h3{color:var(--accent);}
+
+  footer{text-align:center;padding:25px;background:var(--bg-soft);border-top:2px solid var(--accent);
+    color:var(--muted);font-size:.85rem;}
+  footer a{color:var(--accent);text-decoration:none;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">BP</div>
+  <nav>
+    <a href="https://budypeek.github.io" target="_blank">Inicio</a>
+    <a href="" target="_blank">Clips</a>
+    <a href="product-page.html" target="_blank">Merch</a>
+    <a href="https://www.instagram.com/budypeekfc/" target="_blank">Socials</a>
+    <a href="https://www.instagram.com/elburladerobar/" target="_blank">Burladero</a>
+  </nav>
+</header>
+
+<div class="ticker"><span>DIRECTO:</span>Plantilla de Budypeek llega a Nuevos Ministerios y unos espontaneos se lian a palos con un bagabundo.</div>
+
+<main>
+
+  <a class="featured" href="" target="_blank">
+    <img src="https://files.catbox.moe/c0ker5.jpeg" alt="">
+    <div class="featured__caption">
+      <div class="tag">Portada</div>
+      <h1>Sesión de fotos de Budypeek en Parque Nuevo. #SummerFest</h1>
+    </div>
+  </a>
+
+  <section>
+    <h2>Últimas noticias</h2>
+    <div class="grid">
+      <article class="story">
+        <a href="" target="_blank">
+          <div class="story__img" style="background-image:url('https://files.catbox.moe/oe1fo0.png')"></div>
+          <h3>Volcan y Maxibon inauguran Pibardos Podcast con: "Is Robero a Pedophile?"</h3>
+        </a>
+      </article>
+      <article class="story">
+        <a href="" target="_blank">
+          <div class="story__img" style="background-image:url('https://files.catbox.moe/jsr3b0.png')"></div>
+          <h3>Nuestro jugador "Krackene" se ve obligado a abandonar el equipo temporalmente debido a su operación de fimosis.</h3>
+        </a>
+      </article>
+      <article class="story">
+        <a href="" target="_blank">
+          <div class="story__img" style="background-image:url('https://files.catbox.moe/f21dgs.jpeg')"></div>
+          <h3>BudyPeek gana la ESL CS2 Major Katowice 2026.</h3>
+        </a>
+      </article>
+      <article class="story">
+        <a href="" target="_blank">
+          <div class="story__img" style="background-image:url('https://files.catbox.moe/saxa9d.jpg')"></div>
+          <h3>Crítica al Bocata Astrolabio, merece la pena?. #BurladeroBar</h3>
+        </a>
+      </article>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  © 2026 — El Periódico, estilo inspirado en <a href="https://budypeek.github.io" target="_blank">BudyPeek</a>
+</footer>
+
+</body>
+</html>
