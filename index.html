@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>BudyPeek Official</title>
+    <link rel="stylesheet" href="main.css" />
+  </head>
+  <body>
+
+    <header class="navbar">
+      <div class="container navbar-inner">
+        <a href="index.html" class="brand">BP<span></span></a>
+
+        <nav class="hub-nav">
+          <div class="nav-dropdown">
+            <button class="nav-btn" type="button">CSGO</button>
+            <div class="dropdown-panel">
+              <a href="secciones/csgo-highlights.html">Highlights</a>
+              <a href="secciones/csgo-clutches.html">Random Clips</a>
+            </div>
+          </div>
+
+          <div class="nav-dropdown">
+            <button class="nav-btn" type="button">History</button>
+            <div class="dropdown-panel">
+              <a href="secciones/valorant-aces.html">Events</a>
+            </div>
+          </div>
+
+          <div class="nav-dropdown">
+            <button class="nav-btn" type="button">BudyPeek</button>
+            <div class="dropdown-panel">
+              <a href="product-page.html">Merch</a>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main class="hub-main container">
+      <p class="intro-label">Bienvenido</p>
+      <h1>BudyPeek Official Web<span>.</span></h1>
+
+      <div class="hero-content-grid">
+        <div class="hero-photo-wrap">
+          <h3 class="news-title">ESL CS2 Major Katowice 2026 Champs</h3>
+          <img src="https://files.catbox.moe/rabqkl.png" alt="Foto principal" class="hero-photo" />
+        </div>
+
+        <div class="news-panel">
+          <h3 class="news-title">Latest News:</h3>
+          <div class="news-carousel">
+            <a href="product-page.html" class="news-item active" style="background-image: url('https://files.catbox.moe/tloyzf.jpeg')"></a>
+            <a href="" class="news-item" style="background-image: url('https://files.catbox.moe/e1vak9.png')"></a>
+            <a href="https://www.instagram.com/elburladerobar/" class="news-item" style="background-image: url('https://files.catbox.moe/mmqyv3.jpg')"></a>
+          </div>
+          <div class="carousel-dots">
+            <span class="dot active" data-index="0"></span>
+            <span class="dot" data-index="1"></span>
+            <span class="dot" data-index="2"></span>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer container">
+      <div class="footer-inner">
+        <p>© <span id="year"></span> — BudyPeek Team</p>
+        <div class="social-links social-links--row">
+          <a href="https://www.instagram.com/budypeekfc/" target="_blank" class="social-item" aria-label="Instagram">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="social-svg" role="img" aria-hidden="true">
+              <rect x="3" y="3" width="18" height="18" rx="5" ry="5" stroke="currentColor" stroke-width="1.5" fill="none"/>
+              <circle cx="12" cy="12" r="3.2" stroke="currentColor" stroke-width="1.5" fill="none"/>
+              <circle cx="17.7" cy="6.3" r="0.6" fill="currentColor"/>
+            </svg>
+            Instagram
+          </a>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      document.getElementById('year').textContent = new Date().getFullYear();
+
+      const dropdowns = document.querySelectorAll('.nav-dropdown');
+
+      dropdowns.forEach((dropdown) => {
+        const btn = dropdown.querySelector('.nav-btn');
+        const panel = dropdown.querySelector('.dropdown-panel');
+        let closeTimeout;
+
+        const closeDropdown = () => {
+          dropdown.classList.remove('open');
+        };
+
+        const openDropdown = () => {
+          clearTimeout(closeTimeout);
+          dropdowns.forEach((other) => {
+            if (other !== dropdown) {
+              other.classList.remove('open');
+            }
+          });
+          dropdown.classList.add('open');
+        };
+
+        const scheduleClose = () => {
+          clearTimeout(closeTimeout);
+          closeTimeout = setTimeout(closeDropdown, 150);
+        };
+
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (dropdown.classList.contains('open')) {
+            closeDropdown();
+          } else {
+            openDropdown();
+          }
+        });
+
+        dropdown.addEventListener('mouseenter', () => {
+          clearTimeout(closeTimeout);
+          openDropdown();
+        });
+
+        dropdown.addEventListener('mouseleave', () => {
+          scheduleClose();
+        });
+
+        if (panel) {
+          const links = panel.querySelectorAll('a');
+          links.forEach((link) => {
+            link.addEventListener('click', (e) => {
+              e.stopPropagation();
+              closeDropdown();
+            });
+          });
+        }
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('.nav-dropdown')) {
+          dropdowns.forEach((dropdown) => {
+            dropdown.classList.remove('open');
+          });
+        }
+      });
+
+      const newsItems = document.querySelectorAll('.news-item');
+      const dots = document.querySelectorAll('.dot');
+      let currentIndex = 0;
+      let carouselInterval;
+
+      const showNewsItem = (index) => {
+        newsItems.forEach((item, i) => {
+          item.classList.remove('active');
+          dots[i].classList.remove('active');
+        });
+
+        newsItems[index].classList.add('active');
+        dots[index].classList.add('active');
+        currentIndex = index;
+      };
+
+      const startCarousel = () => {
+        carouselInterval = setInterval(() => {
+          const nextIndex = (currentIndex + 1) % newsItems.length;
+          showNewsItem(nextIndex);
+        }, 5000);
+      };
+
+      const newsCarousel = document.querySelector('.news-carousel');
+      if (newsCarousel) {
+        newsCarousel.addEventListener('mouseenter', () => {
+          clearInterval(carouselInterval);
+        });
+
+        newsCarousel.addEventListener('mouseleave', () => {
+          startCarousel();
+        });
+      }
+
+      dots.forEach((dot, index) => {
+        dot.addEventListener('click', () => {
+          clearInterval(carouselInterval);
+          showNewsItem(index);
+          startCarousel();
+        });
+      });
+
+      startCarousel();
+    </script>
+  </body>
+</html>

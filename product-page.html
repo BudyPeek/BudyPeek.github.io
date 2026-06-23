@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BudyPeek Shop</title>
+<style>
+  /* ========= TOKENS ========= */
+  :root {
+    --black:    #0d0d0d;
+    --white:    #f7f5f0;
+    --red:      #003d99;
+    --red-dark: #001f66;
+    --gold:     #c9a84c;
+    --gray-1:   #1c1c1c;
+    --gray-2:   #2e2e2e;
+    --gray-3:   #555;
+    --gray-4:   #999;
+    --gray-5:   #ccc;
+    --gray-6:   #eaeaea;
+    --green:    #1a6e35;
+    --font-display: 'Georgia', 'Times New Roman', serif;
+    --font-body:    'Arial', Helvetica, sans-serif;
+    --radius: 2px;
+  }
+
+  /* ========= RESET ========= */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--white);
+    color: var(--black);
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  a { color: inherit; text-decoration: none; }
+  ul { list-style: none; }
+  img { max-width: 100%; display: block; }
+  button { cursor: pointer; font-family: inherit; }
+
+  /* ========= HEADER ========= */
+  .site-header {
+    background: var(--black);
+    color: var(--white);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 2px solid var(--red);
+  }
+  .header-inner {
+    max-width: 1400px;
+    margin: auto;
+    padding: 0 20px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  .logo {
+    font-family: var(--font-display);
+    font-size: 22px;
+    letter-spacing: .18em;
+    color: var(--white);
+    text-transform: uppercase;
+    flex-shrink: 0;
+  }
+  .logo span { color: var(--red); }
+
+  .nav-links {
+    display: flex;
+    gap: 24px;
+    font-size: 13px;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+  }
+  .nav-links a {
+    color: var(--gray-5);
+    transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--white); }
+
+  .header-search {
+    display: flex;
+    align-items: center;
+    background: var(--gray-1);
+    border: 1px solid var(--gray-2);
+    border-radius: var(--radius);
+    overflow: hidden;
+    max-width: 220px;
+    flex: 1;
+  }
+  .header-search input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--white);
+    font-size: 13px;
+    padding: 6px 10px;
+    width: 100%;
+  }
+  .header-search input::placeholder { color: var(--gray-3); }
+  .header-search button {
+    background: none;
+    border: none;
+    color: var(--gray-4);
+    padding: 6px 10px;
+    font-size: 16px;
+  }
+
+  .header-icons {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    font-size: 20px;
+    color: var(--gray-5);
+    flex-shrink: 0;
+  }
+  .header-icons a {
+    color: var(--gray-5);
+    transition: color .2s;
+    position: relative;
+  }
+  .header-icons a:hover { color: var(--white); }
+  .cart-badge {
+    position: absolute;
+    top: -6px; right: -8px;
+    background: var(--red);
+    color: #fff;
+    border-radius: 50%;
+    font-size: 9px;
+    width: 16px; height: 16px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700;
+  }
+
+  /* ========= PROMO BANNER ========= */
+  .promo-banner {
+    background: var(--red);
+    color: #fff;
+    text-align: center;
+    padding: 8px 20px;
+    font-size: 13px;
+    letter-spacing: .04em;
+  }
+  .promo-banner strong { letter-spacing: .1em; }
+  .promo-banner .copy-code {
+    background: rgba(255,255,255,.2);
+    border: 1px solid rgba(255,255,255,.5);
+    color: #fff;
+    font-size: 12px;
+    padding: 2px 10px;
+    border-radius: var(--radius);
+    margin-left: 10px;
+    cursor: pointer;
+    transition: background .2s;
+  }
+  .promo-banner .copy-code:hover { background: rgba(255,255,255,.35); }
+
+  /* ========= BREADCRUMB ========= */
+  .breadcrumb {
+    max-width: 1400px;
+    margin: auto;
+    padding: 12px 20px;
+    font-size: 12px;
+    color: var(--gray-3);
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .breadcrumb a { color: var(--gray-3); }
+  .breadcrumb a:hover { text-decoration: underline; color: var(--black); }
+  .breadcrumb span { color: var(--gray-4); }
+
+  /* ========= LAYOUT ========= */
+  .product-page {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px 60px;
+    display: grid;
+    grid-template-columns: 72px 1fr 420px;
+    grid-template-rows: auto;
+    column-gap: 20px;
+  }
+
+  /* ========= THUMBNAILS ========= */
+  .thumbs-col {
+    grid-column: 1;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-top: 4px;
+  }
+  .thumb {
+    width: 64px;
+    height: 72px;
+    border: 2px solid transparent;
+    border-radius: var(--radius);
+    overflow: hidden;
+    cursor: pointer;
+    background: #fff;
+    transition: border-color .18s;
+  }
+  .thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .thumb.active, .thumb:hover { border-color: var(--black); }
+
+  /* ========= MAIN IMAGE ========= */
+  .image-col {
+    grid-column: 2;
+    grid-row: 1;
+    position: relative;
+    background: #fff;
+    border-radius: var(--radius);
+    overflow: hidden;
+    min-height: 560px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .image-col img {
+    max-height: 600px;
+    width: 100%;
+    object-fit: contain;
+    transition: opacity .3s;
+  }
+  .img-action {
+    position: absolute;
+    bottom: 14px; right: 14px;
+    display: flex;
+    gap: 8px;
+  }
+  .img-btn {
+    background: rgba(255,255,255,.9);
+    border: 1px solid var(--gray-5);
+    border-radius: 50%;
+    width: 38px; height: 38px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    color: var(--black);
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,.12);
+    transition: background .18s;
+  }
+  .img-btn:hover { background: #fff; }
+
+  /* ========= DETAILS COL ========= */
+  .details-col {
+    grid-column: 3;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* Brand logo */
+  .brand-logo-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .brand-logo {
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--gray-3);
+    border: 1px solid var(--gray-5);
+    padding: 4px 10px;
+    border-radius: var(--radius);
+  }
+  .official-badge {
+    font-size: 10px;
+    letter-spacing: .08em;
+    color: var(--gold);
+    text-transform: uppercase;
+    border: 1px solid var(--gold);
+    padding: 3px 8px;
+    border-radius: var(--radius);
+  }
+
+  /* Price */
+  .price-block { display: flex; flex-direction: column; gap: 4px; }
+  .current-price {
+    font-family: var(--font-display);
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--black);
+    line-height: 1;
+  }
+  .price-note {
+    font-size: 11px;
+    color: var(--gray-4);
+  }
+  .price-note a { text-decoration: underline; color: var(--gray-4); }
+
+  /* Product title */
+  .product-title {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.35;
+    color: var(--black);
+  }
+  .product-subtitle {
+    font-size: 13px;
+    color: var(--gray-3);
+    margin-top: 2px;
+  }
+
+  /* Stars */
+  .reviews-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--gray-3);
+  }
+  .stars { color: #d4a017; font-size: 16px; letter-spacing: 1px; }
+  .reviews-link { text-decoration: underline; cursor: pointer; color: var(--gray-3); }
+
+  /* Size selector */
+  .size-section { display: flex; flex-direction: column; gap: 10px; }
+  .size-label-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+  }
+  .size-label-row strong { font-size: 14px; }
+  .size-guide-link {
+    font-size: 12px;
+    color: var(--gray-3);
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  .size-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .size-btn {
+    min-width: 50px;
+    padding: 8px 10px;
+    border: 1px solid var(--black);
+    background: transparent;
+    font-size: 14px;
+    border-radius: var(--radius);
+    color: var(--black);
+    transition: background .18s, color .18s;
+    line-height: 1;
+  }
+  .size-btn:hover, .size-btn.selected {
+    background: var(--black);
+    color: var(--white);
+  }
+  .size-error {
+    font-size: 12px;
+    color: var(--red);
+    display: none;
+  }
+  .size-error.visible { display: block; }
+
+  /* Availability */
+  .availability {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+  }
+  .dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--green);
+    flex-shrink: 0;
+  }
+
+  /* CTA buttons */
+  .cta-row {
+    display: flex;
+    gap: 10px;
+  }
+  .btn-cart {
+    flex: 1;
+    background: var(--green);
+    color: #fff;
+    border: none;
+    border-radius: var(--radius);
+    padding: 14px 20px;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-weight: 600;
+    letter-spacing: .04em;
+    transition: background .2s;
+    border-bottom: 3px solid #0f4a22;
+  }
+  .btn-cart:hover { background: #145928; }
+  .btn-wishlist {
+    width: 50px; height: 50px;
+    border: 1px solid var(--black);
+    background: transparent;
+    border-radius: var(--radius);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+    transition: background .2s, color .2s;
+  }
+  .btn-wishlist:hover { background: var(--black); color: var(--white); }
+  .btn-wishlist.active { background: var(--black); color: #fff; }
+
+  /* BSC promo box */
+  .bsc-box {
+    background: var(--black);
+    color: var(--white);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .bsc-icon { font-size: 30px; flex-shrink: 0; }
+  .bsc-text { line-height: 1.5; }
+  .bsc-link { color: var(--gold); text-decoration: underline; }
+
+  /* Promo accordion */
+  .promo-box {
+    background: var(--red);
+    color: #fff;
+    border-radius: var(--radius);
+    padding: 14px 16px;
+  }
+  .promo-box-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    user-select: none;
+  }
+  .promo-box-body {
+    margin-top: 10px;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .promo-code-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(0,0,0,.2);
+    border-radius: var(--radius);
+    padding: 8px 12px;
+    margin-top: 8px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .promo-code { font-weight: 700; letter-spacing: .1em; font-size: 16px; }
+  .btn-copy {
+    background: rgba(255,255,255,.2);
+    border: 1px solid rgba(255,255,255,.5);
+    color: #fff;
+    padding: 4px 12px;
+    border-radius: var(--radius);
+    font-size: 12px;
+    cursor: pointer;
+    transition: background .2s;
+  }
+  .btn-copy:hover { background: rgba(255,255,255,.35); }
+
+  /* USPs */
+  .usps {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding: 14px 16px;
+    background: #fff;
+    border-radius: var(--radius);
+    border: 1px solid var(--gray-6);
+  }
+  .usp {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+  }
+  .usp-icon { font-size: 18px; flex-shrink: 0; }
+
+  /* ========= DETAIL TABS (below the grid) ========= */
+  .detail-section {
+    max-width: 1400px;
+    margin: 24px auto 0;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+  }
+
+  .detail-card {
+    background: #fff;
+    border-radius: var(--radius);
+    border: 1px solid var(--gray-6);
+    overflow: hidden;
+  }
+  .detail-card-header {
+    padding: 14px 18px;
+    font-size: 14px;
+    font-weight: 700;
+    border-bottom: 1px solid var(--gray-6);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+  }
+  .detail-card-header .toggle-icon { font-size: 11px; color: var(--gray-3); transition: transform .2s; }
+  .detail-card-header.open .toggle-icon { transform: rotate(180deg); }
+  .detail-card-body {
+    padding: 14px 18px;
+    font-size: 13px;
+    line-height: 1.8;
+    color: var(--gray-2);
+  }
+  .detail-card-body ul { margin-left: 16px; list-style: disc; }
+  .detail-card-body ul li { margin-bottom: 4px; }
+
+  .info-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .info-table tr { border-top: 1px solid var(--gray-6); }
+  .info-table th {
+    text-align: left;
+    color: var(--gray-3);
+    padding: 7px 0;
+    font-weight: 400;
+    width: 50%;
+  }
+  .info-table td { padding: 7px 0; color: var(--black); }
+  .info-table td a { color: var(--black); text-decoration: underline; }
+
+  /* ========= REVIEWS ========= */
+  .reviews-section {
+    max-width: 1400px;
+    margin: 24px auto 0;
+    padding: 0 20px;
+  }
+  .reviews-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 18px;
+    background: #fff;
+    border: 1px solid var(--gray-6);
+    border-radius: var(--radius);
+    margin-bottom: 12px;
+  }
+  .reviews-header h2 { font-size: 18px; font-family: var(--font-display); font-weight: 400; }
+  .reviews-avg { font-size: 28px; font-weight: 700; font-family: var(--font-display); }
+
+  .review-card {
+    background: #fff;
+    border: 1px solid var(--gray-6);
+    border-radius: var(--radius);
+    padding: 18px;
+    margin-bottom: 10px;
+  }
+  .review-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+  .reviewer-name { font-weight: 700; font-size: 14px; }
+  .review-date { font-size: 12px; color: var(--gray-4); }
+  .review-body { font-size: 13px; color: var(--gray-2); line-height: 1.7; }
+
+  /* ========= FOOTER ========= */
+  .footer-newsletter {
+    background: var(--black);
+    color: var(--white);
+    padding: 40px 20px;
+    margin-top: 40px;
+  }
+  .newsletter-inner {
+    max-width: 1400px;
+    margin: auto;
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .newsletter-badge {
+    font-family: var(--font-display);
+    font-size: 48px;
+    color: var(--red);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .newsletter-badge span { display: block; font-size: 14px; color: var(--gray-4); letter-spacing: .1em; text-transform: uppercase; }
+  .newsletter-form { display: flex; gap: 10px; flex: 1; min-width: 260px; }
+  .newsletter-input {
+    flex: 1;
+    background: var(--gray-1);
+    border: 1px solid var(--gray-2);
+    border-bottom: 1px solid #fff;
+    color: #fff;
+    padding: 10px 14px;
+    font-size: 14px;
+    outline: none;
+    border-radius: 0;
+    min-width: 0;
+  }
+  .newsletter-input::placeholder { color: var(--gray-3); }
+  .newsletter-submit {
+    background: var(--white);
+    color: var(--black);
+    border: none;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    transition: background .2s;
+  }
+  .newsletter-submit:hover { background: var(--gray-6); }
+
+  .footer-links {
+    background: var(--gray-1);
+    color: var(--gray-5);
+    padding: 30px 20px;
+  }
+  .footer-links-inner {
+    max-width: 1400px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 30px;
+  }
+  .footer-col h3 {
+    font-family: var(--font-display);
+    font-size: 14px;
+    color: var(--white);
+    margin-bottom: 14px;
+    letter-spacing: .05em;
+  }
+  .footer-col a {
+    display: block;
+    color: var(--gray-4);
+    font-size: 13px;
+    margin-bottom: 8px;
+    transition: color .18s;
+  }
+  .footer-col a:hover { color: var(--white); }
+  .footer-copy {
+    max-width: 1400px;
+    margin: 24px auto 0;
+    font-size: 12px;
+    color: var(--gray-3);
+    padding-top: 20px;
+    border-top: 1px solid var(--gray-2);
+  }
+
+  /* ========= SIZE GUIDE MODAL ========= */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,.75);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal-box {
+    background: #fff;
+    max-width: 560px;
+    width: 90%;
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--gray-6);
+    font-family: var(--font-display);
+    font-size: 18px;
+  }
+  .modal-close {
+    background: none;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    color: var(--gray-3);
+    line-height: 1;
+  }
+  .modal-body { padding: 20px; overflow-y: auto; max-height: 60vh; }
+  .size-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .size-table th, .size-table td {
+    text-align: left;
+    padding: 8px 10px;
+    border-bottom: 1px solid var(--gray-6);
+  }
+  .size-table thead th { background: var(--black); color: #fff; }
+  .size-table tbody tr:nth-child(even) { background: var(--gray-6); }
+
+  /* ========= TOAST ========= */
+  .toast {
+    position: fixed;
+    bottom: 30px; left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: var(--black);
+    color: #fff;
+    padding: 12px 22px;
+    border-radius: var(--radius);
+    font-size: 14px;
+    opacity: 0;
+    transition: transform .3s, opacity .3s;
+    z-index: 9999;
+    white-space: nowrap;
+    border-left: 3px solid var(--green);
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+  /* ========= RESPONSIVE ========= */
+  @media (max-width: 1024px) {
+    .product-page {
+      grid-template-columns: 64px 1fr;
+      grid-template-rows: auto auto;
+    }
+    .details-col {
+      grid-column: 1 / -1;
+      grid-row: 2;
+    }
+  }
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .header-search { display: none; }
+    .product-page {
+      grid-template-columns: 1fr;
+      padding: 0 12px 40px;
+    }
+    .thumbs-col {
+      flex-direction: row;
+      grid-column: 1;
+      grid-row: 2;
+      overflow-x: auto;
+    }
+    .thumb { width: 56px; height: 62px; flex-shrink: 0; }
+    .image-col { grid-column: 1; grid-row: 1; min-height: 300px; }
+    .details-col { grid-column: 1; grid-row: 3; }
+    .detail-section { padding: 0 12px; }
+    .reviews-section { padding: 0 12px; }
+    .newsletter-form { flex-direction: column; }
+    .usps { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- PROMO BANNER -->
+<div class="promo-banner">
+  🔥 <strong>15% de descuento</strong> en casi todo con el código
+  <strong>PEEK15</strong>
+  <button class="copy-code" onclick="copyCode('PEEK15')">Copiar código</button>
+  · Pedido mínimo 49,99 € · Solo online
+</div>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo">BudyPeek<span>      merch</span></div>
+    <nav class="nav-links">
+      <a href="index.html">Inicio</a>
+      <a href="">Nuevo</a>
+      <a href="">Entretenimiento</a>
+      <a href="">Marcas</a>
+      <a href="">Ofertas %</a>
+    </nav>
+    <div class="header-search">
+      <input type="text" placeholder="¿Qué buscas?">
+      <button>🔍</button>
+    </div>
+    <div class="header-icons">
+      <a href="#" title="Mi cuenta">👤</a>
+      <a href="#" title="Lista de deseos">♡</a>
+      <a href="#" title="Cesta" style="position:relative">
+        🛍
+        <span class="cart-badge">0</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- BREADCRUMB -->
+<nav class="breadcrumb" aria-label="breadcrumb">
+  <a href="#">Inicio</a>
+  <span>›</span>
+  <a href="#">BudyPeek</a>
+  <span>›</span>
+  <a href="#">Jerseys</a>
+  <span>›</span>
+  <a href="#">Team</a>
+  <span>›</span>
+  <span style="color:var(--black)">BudyPeek Major Copenhague 2024 Jersey</span>
+</nav>
+
+<!-- PRODUCT PAGE GRID -->
+<main class="product-page">
+
+  <!-- THUMBNAILS -->
+  <div class="thumbs-col">
+    <div class="thumb active" onclick="switchImg(this, 'https://files.catbox.moe/gx7ak6.png')">
+      <img src="https://files.catbox.moe/gx7ak6.png" alt="Vista 1">
+    </div>
+    <div class="thumb" onclick="switchImg(this, 'https://files.catbox.moe/wc530z.png')">
+      <img src="https://files.catbox.moe/wc530z.png" alt="Vista 2">
+    </div>
+    <div class="thumb" onclick="switchImg(this, 'https://files.catbox.moe/ds2fuk.png')">
+      <img src="https://files.catbox.moe/ds2fuk.png" alt="Vista 3">
+    </div>
+    <div class="thumb" onclick="switchImg(this, 'https://files.catbox.moe/1eiu4w.jpg')">
+      <img src="https://files.catbox.moe/1eiu4w.jpg" alt="Vista 4">
+    </div>
+    <div class="thumb" onclick="switchImg(this, 'https://files.catbox.moe/35f3pn.jpg')">
+      <img src="https://files.catbox.moe/35f3pn.jpg" alt="Vista 5">
+    </div>
+  </div>
+
+  <!-- MAIN IMAGE -->
+  <div class="image-col">
+    <img id="main-img"
+      src="https://files.catbox.moe/gx7ak6.png"
+      alt="BudyPeek 2024 Jersey - Classic Edition">
+    <div class="img-action">
+      <button class="img-btn" title="Compartir" onclick="shareProduct()">🔀</button>
+    </div>
+  </div>
+
+  <!-- DETAILS -->
+  <div class="details-col">
+
+    <!-- Brand + badge -->
+    <div class="brand-logo-wrap">
+      <div class="brand-logo">Budy Peek</div>
+      <div class="official-badge">⭐ Licencia Oficial</div>
+    </div>
+
+    <!-- Price -->
+    <div class="price-block">
+      <div class="current-price">75,99 €</div>
+      <div class="price-note">IVA incluido · <a href="#">Gastos de envío</a> no incluidos</div>
+    </div>
+
+    <!-- Title -->
+    <div>
+      <h1 class="product-title">BudyPeek 2024 Jersey - Classic Edition</h1>
+      <div class="product-subtitle">de BudyPeek</div>
+    </div>
+
+    <!-- Reviews -->
+    <div class="reviews-row">
+      <span class="stars">★★★★★</span>
+      <span class="reviews-link" onclick="document.getElementById('reviews').scrollIntoView({behavior:'smooth'})">2 Opiniones</span>
+    </div>
+
+    <!-- Size -->
+    <div class="size-section">
+      <div class="size-label-row">
+        <strong>Elige tu talla</strong>
+        <span class="size-guide-link" onclick="document.getElementById('sizeModal').classList.add('open')">Guía de tallas 📏</span>
+      </div>
+      <div class="size-grid" id="size-grid">
+        <button class="size-btn" onclick="selectSize(this)">S</button>
+        <button class="size-btn" onclick="selectSize(this)">M</button>
+        <button class="size-btn" onclick="selectSize(this)">L</button>
+        <button class="size-btn" onclick="selectSize(this)">XL</button>
+        <button class="size-btn" onclick="selectSize(this)">XXL</button>
+        <button class="size-btn" onclick="selectSize(this)">3XL</button>
+        <button class="size-btn" onclick="selectSize(this)">4XL</button>
+        <button class="size-btn" onclick="selectSize(this)">5XL</button>
+      </div>
+      <div class="size-error" id="size-error">Por favor, elige una talla antes de añadir al carrito.</div>
+    </div>
+
+    <!-- Availability -->
+    <div class="availability">
+      <div class="dot"></div>
+      <span>Disponible para envío inmediato</span>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-row">
+      <button class="btn-wishlist" id="btn-wish" onclick="toggleWishlist(this)" title="Lista de deseos" aria-label="Añadir a lista de deseos">♡</button>
+      <button class="btn-cart" onclick="addToCart()">
+        🛍 Añadir a la cesta
+      </button>
+    </div>
+
+    <!-- BSC Box -->
+    <div class="bsc-box">
+      <div class="bsc-icon">🎤</div>
+      <div class="bsc-text">
+        Ahorra en envíos y prueba <strong>Burling+</strong> gratis 30 días.
+        <br><a href="#" class="bsc-link">Más información</a>
+      </div>
+    </div>
+
+    <!-- Promo -->
+    <div class="promo-box">
+      <div class="promo-box-header" onclick="togglePromo(this)">
+        ⏰ <span>–15% ¡Por tiempo limitado!</span>
+      </div>
+      <div class="promo-box-body">
+        <div class="promo-code-row">
+          <span>Código: <span class="promo-code">PEEK15</span></span>
+          <button class="btn-copy" onclick="copyCode('PEEK15')">Copiar código</button>
+        </div>
+        <p style="margin-top:8px;font-size:12px;opacity:.85;">
+          Válido hasta el 23/06/26 · Solo online · Pedido mínimo 49,99 € · No acumulable con otras promociones.
+        </p>
+      </div>
+    </div>
+
+    <!-- USPs -->
+    <div class="usps">
+      <div class="usp"><span class="usp-icon">💳</span> Paga por factura</div>
+      <div class="usp"><span class="usp-icon">⭐</span> Artículos exclusivos</div>
+      <div class="usp"><span class="usp-icon">↩️</span> 30 días de devolución</div>
+      <div class="usp"><span class="usp-icon">✓</span> Servicio excelente</div>
+    </div>
+
+  </div><!-- /details-col -->
+</main>
+
+<!-- DETAIL CARDS -->
+<div class="detail-section">
+
+  <div class="detail-card">
+    <div class="detail-card-header open" onclick="toggleCard(this)">
+      Descripción del artículo <span class="toggle-icon">▼</span>
+    </div>
+    <div class="detail-card-body">
+      <ul>
+        <li>Camiseta de E-Sports auténtica</li>
+        <li>BudyPeek como patrocinador en el frente</li>
+        <li>Estampado en la parte delantera y trasera</li>
+        <li>Parches en la parte frontal</li>
+        <li>Mangas impresas</li>
+        <li>Estampado de BudyPeek en el cuello</li>
+        <li>Largo estándar · Corte Regular · Cuello Redondo</li>
+        <li>Producto con licencia oficial</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="detail-card">
+    <div class="detail-card-header open" onclick="toggleCard(this)">
+      Información <span class="toggle-icon">▼</span>
+    </div>
+    <div class="detail-card-body">
+      <table class="info-table">
+        <tr><th>Artículo nº</th><td>582742</td></tr>
+        <tr><th>Equipo</th><td><a href="#">BudyPeek</a></td></tr>
+        <tr><th>Género</th><td><a href="#">E-Sports</a></td></tr>
+        <tr><th>Licencia</th><td>Licencia oficial del producto</td></tr>
+        <tr><th>Fecha de lanzamiento</th><td>04/05/2024</td></tr>
+        <tr><th>Sexo</th><td>Hombre</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="detail-card">
+    <div class="detail-card-header open" onclick="toggleCard(this)">
+      Diseño <span class="toggle-icon">▼</span>
+    </div>
+    <div class="detail-card-body">
+      <table class="info-table">
+        <tr><th>Tipo de producto</th><td>Jersey</td></tr>
+        <tr><th>Color</th><td>Azul</td></tr>
+        <tr><th>Patrón</th><td>Liso</td></tr>
+        <tr><th>Estampada</th><td>Sí</td></tr>
+        <tr><th>Estilo estampado</th><td>Serigrafía</td></tr>
+        <tr><th>Forma escote</th><td>Cuello Redondo</td></tr>
+        <tr><th>Largo mangas</th><td>Manga corta</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="detail-card">
+    <div class="detail-card-header open" onclick="toggleCard(this)">
+      Material y cuidados <span class="toggle-icon">▼</span>
+    </div>
+    <div class="detail-card-body">
+      <table class="info-table">
+        <tr><th>Material externo</th><td>100% poliéster</td></tr>
+        <tr><th>Instrucciones de cuidado</th><td>Lavado a máquina</td></tr>
+        <tr><th>Ajuste</th><td>Regular</td></tr>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<!-- REVIEWS -->
+<section class="reviews-section" id="reviews">
+  <div class="reviews-header">
+    <div class="reviews-avg">5,0</div>
+    <div>
+      <div class="stars">★★★★★</div>
+      <h2>2 Opiniones</h2>
+    </div>
+  </div>
+
+  <div class="review-card">
+    <div class="review-card-top">
+      <div>
+        <div class="reviewer-name">Krackene</div>
+        <div class="stars" style="font-size:14px">★★★★★</div>
+      </div>
+      <div class="review-date">Mayo 2025</div>
+    </div>
+    <div class="review-body">¡Increíble camiseta! La calidad es excelente y el diseño de BudyPeek es brutal. Llegó antes de lo esperado y la talla es exactamente la que necesitaba. Totalmente recomendable para cualquier fan. Saludos a Astrolabio!!</div>
+  </div>
+
+  <div class="review-card">
+    <div class="review-card-top">
+      <div>
+        <div class="reviewer-name">John3345</div>
+        <div class="stars" style="font-size:14px">★★★★★</div>
+      </div>
+      <div class="review-date">Junio 2025</div>
+    </div>
+    <div class="review-body">La tela es muy cómoda, transpira bien. Perfecta para llevarla en conciertos. El estampado es fiel al diseño original y los parches están muy bien cosidos. Yo por ti, volvería a comprar.</div>
+  </div>
+</section>
+
+<!-- FOOTER NEWSLETTER -->
+<div class="footer-newsletter">
+  <div class="newsletter-inner">
+    <div class="newsletter-badge">
+      15%
+      <span>descuento</span>
+    </div>
+    <div style="flex:1;min-width:200px;">
+      <p style="font-family:var(--font-display);font-size:18px;margin-bottom:6px;">E-mail Newsletter</p>
+      <p style="font-size:13px;color:var(--gray-4);margin-bottom:14px;">¡Cheque regalo del 15% de descuento, ¡suscríbete ahora!</p>
+      <div class="newsletter-form">
+        <input class="newsletter-input" type="email" placeholder="Tu email">
+        <button class="newsletter-submit">Suscribir</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER LINKS -->
+<footer class="footer-links">
+  <div class="footer-links-inner">
+    <div class="footer-col">
+      <h3>Atención al Cliente</h3>
+      <a href="#">Ayuda (FAQ)</a>
+      <a href="#">Política de Devolución</a>
+      <a href="#">Devolver un artículo</a>
+      <a href="#">Información de tallas</a>
+    </div>
+    <div class="footer-col">
+      <h3>Descuentos</h3>
+      <a href="#">Concursos</a>
+      <a href="#">Cheques Regalo</a>
+      <a href="#">Descuento para estudiantes</a>
+      <a href="#">EMP Backstage Club</a>
+    </div>
+    <div class="footer-col">
+      <h3>Sobre Nosotros</h3>
+      <a href="#">Eventos</a>
+      <a href="#">Programa de Afiliados</a>
+      <a href="#">Sostenibilidad</a>
+    </div>
+    <div class="footer-col">
+      <h3>Legal</h3>
+      <a href="#">Términos y Condiciones</a>
+      <a href="#">Aviso Legal</a>
+      <a href="#">Ley Protección de Datos</a>
+      <a href="#">Configuración Cookies</a>
+    </div>
+  </div>
+  <div class="footer-copy">
+    <p>Todos los precios incluyen IVA pero no los gastos de transporte.</p>
+    <p>© 1986-2026 BudyPeek — Inspired by Astrolabio</p>
+  </div>
+</footer>
+
+<!-- SIZE GUIDE MODAL -->
+<div class="modal-overlay" id="sizeModal" onclick="closeSizeModal(event)">
+  <div class="modal-box">
+    <div class="modal-header">
+      Guía de tallas
+      <button class="modal-close" onclick="document.getElementById('sizeModal').classList.remove('open')">✕</button>
+    </div>
+    <div class="modal-body">
+      <p style="margin-bottom:14px;font-size:13px;color:var(--gray-3)">Camisetas, Jerseys y Sudaderas</p>
+      <table class="size-table">
+        <thead>
+          <tr><th>Talla</th><th>Talla ropa</th><th>Pecho</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>XS</td><td>32/34</td><td>83–86 cm</td></tr>
+          <tr><td>S</td><td>36/38</td><td>87–93 cm</td></tr>
+          <tr><td>M</td><td>40/42</td><td>94–101 cm</td></tr>
+          <tr><td>L</td><td>44/46</td><td>102–109 cm</td></tr>
+          <tr><td>XL</td><td>48/50</td><td>110–117 cm</td></tr>
+          <tr><td>XXL</td><td>52/54</td><td>118–125 cm</td></tr>
+          <tr><td>3XL</td><td>56/58</td><td>126–130 cm</td></tr>
+          <tr><td>4XL</td><td>60/62</td><td>131–135 cm</td></tr>
+          <tr><td>5XL</td><td>64/66</td><td>136–140 cm</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+  /* ---- image switcher ---- */
+  function switchImg(thumb, url) {
+    document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+    thumb.classList.add('active');
+    var img = document.getElementById('main-img');
+    img.style.opacity = '0';
+    setTimeout(function() {
+      img.src = url;
+      img.style.opacity = '1';
+    }, 200);
+  }
+
+  /* ---- size selector ---- */
+  var selectedSize = null;
+  function selectSize(btn) {
+    document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    selectedSize = btn.textContent;
+    document.getElementById('size-error').classList.remove('visible');
+  }
+
+  /* ---- add to cart ---- */
+  function addToCart() {
+    if (!selectedSize) {
+      document.getElementById('size-error').classList.add('visible');
+      document.getElementById('size-grid').scrollIntoView({behavior:'smooth', block:'center'});
+      return;
+    }
+    showToast('✓  Talla ' + selectedSize + ' añadida a la cesta');
+    document.querySelector('.cart-badge').textContent = parseInt(document.querySelector('.cart-badge').textContent || 0) + 1;
+  }
+
+  /* ---- wishlist toggle ---- */
+  function toggleWishlist(btn) {
+    btn.classList.toggle('active');
+    btn.textContent = btn.classList.contains('active') ? '♥' : '♡';
+    showToast(btn.classList.contains('active') ? '♥  Añadido a lista de deseos' : 'Eliminado de la lista de deseos');
+  }
+
+  /* ---- copy code ---- */
+  function copyCode(code) {
+    navigator.clipboard.writeText(code).catch(function() {});
+    showToast('📋  Código ' + code + ' copiado al portapapeles');
+  }
+
+  /* ---- share ---- */
+  function shareProduct() {
+    if (navigator.share) {
+      navigator.share({ title: 'IMFC West Ham Jersey – Iron Maiden', url: window.location.href });
+    } else {
+      copyCode(window.location.href);
+    }
+  }
+
+  /* ---- toast ---- */
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function() { t.classList.remove('show'); }, 3000);
+  }
+
+  /* ---- detail cards toggle ---- */
+  function toggleCard(header) {
+    header.classList.toggle('open');
+    var body = header.nextElementSibling;
+    body.style.display = body.style.display === 'none' ? '' : 'none';
+  }
+
+  /* ---- promo toggle ---- */
+  function togglePromo(el) {
+    var body = el.nextElementSibling;
+    body.style.display = body.style.display === 'none' ? '' : 'none';
+  }
+
+  /* ---- size modal close ---- */
+  function closeSizeModal(event) {
+    if (event.target === document.getElementById('sizeModal')) {
+      document.getElementById('sizeModal').classList.remove('open');
+    }
+  }
+</script>
+
+</body>
+</html>
