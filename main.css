@@ -34,14 +34,15 @@ body {
   padding: 2rem 0;
   border-bottom: 1px solid var(--border);
 }
+
 .navbar .container {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-between;
   align-items: center;
   gap: 0.5rem;
 }
+
 .brand {
   font-weight: 900;
   font-size: 1.5rem;
@@ -50,6 +51,7 @@ body {
   letter-spacing: -1px;
 }
 .brand span { color: var(--muted); }
+
 .nav-links a {
   text-decoration: none;
   color: var(--text);
@@ -66,6 +68,7 @@ body {
   gap: 4rem;
   align-items: center;
 }
+
 .intro-label {
   text-transform: uppercase;
   font-size: 0.8rem;
@@ -74,6 +77,7 @@ body {
   color: var(--muted);
   margin-bottom: 1rem;
 }
+
 h1 {
   font-size: clamp(2.5rem, 4vw, 3.5rem);
   font-weight: 900;
@@ -82,6 +86,7 @@ h1 {
   margin-bottom: 1.5rem;
 }
 h1 span { color: #4a9eff; }
+
 .description {
   font-size: 1.25rem;
   color: var(--muted);
@@ -94,6 +99,7 @@ h1 span { color: #4a9eff; }
   gap: 1rem;
   margin-bottom: 2rem;
 }
+
 .btn {
   padding: 0.8rem 1.8rem;
   border-radius: 4px;
@@ -134,15 +140,13 @@ h1 span { color: #4a9eff; }
   transition: color 0.2s;
 }
 .social-item:hover { color: var(--text); }
-.social-item svg { fill: currentColor; }
 .social-item svg {
+  fill: currentColor;
   width: 20px;
   height: 20px;
   flex: 0 0 20px;
   display: block;
   overflow: visible;
-  max-width: none;
-  max-height: none;
   box-sizing: content-box;
   padding: 0 1px;
 }
@@ -189,9 +193,11 @@ h1 span { color: #4a9eff; }
 
 .hub-nav {
   display: flex;
+  flex-wrap: wrap;
   gap: 1.5rem;
   align-items: center;
   margin-left: auto;
+  justify-content: flex-end;
 }
 
 .nav-dropdown {
@@ -210,6 +216,7 @@ h1 span { color: #4a9eff; }
   cursor: pointer;
   transition: all 0.3s ease;
   font-family: 'Inter', -apple-system, sans-serif;
+  white-space: nowrap;
 }
 
 .nav-btn:hover {
@@ -226,7 +233,7 @@ h1 span { color: #4a9eff; }
   background: #f0f4f8;
   border: 1px solid #d0d8e0;
   border-radius: 4px;
-  min-width: 200px;
+  min-width: 180px;
   margin-top: 0.5rem;
   opacity: 0;
   visibility: hidden;
@@ -247,11 +254,7 @@ h1 span { color: #4a9eff; }
   transition: all 0.2s ease;
   border-bottom: 1px solid #e0e8f0;
 }
-
-.dropdown-panel a:last-child {
-  border-bottom: none;
-}
-
+.dropdown-panel a:last-child { border-bottom: none; }
 .dropdown-panel a:hover {
   background: #e8f0ff;
   padding-left: 1.6rem;
@@ -273,14 +276,8 @@ h1 span { color: #4a9eff; }
   padding: 2rem 0 1rem 0;
   text-align: center;
 }
-
-.hub-main h1 {
-  margin: 0 auto 1.5rem auto;
-}
-
-.hub-main .description {
-  margin: 0 auto;
-}
+.hub-main h1 { margin: 0 auto 1.5rem auto; }
+.hub-main .description { margin: 0 auto; }
 
 /* ============================================================
    HERO PHOTO + NEWS PANEL
@@ -359,7 +356,6 @@ h1 span { color: #4a9eff; }
   text-decoration: none;
   cursor: pointer;
 }
-
 .news-item.active {
   opacity: 1;
   z-index: 10;
@@ -369,8 +365,6 @@ h1 span { color: #4a9eff; }
   display: flex;
   justify-content: center;
   gap: 0.6rem;
-  padding: 0;
-  margin: 0;
 }
 
 .dot {
@@ -382,10 +376,7 @@ h1 span { color: #4a9eff; }
   transition: background 0.3s ease;
   border: 2px solid var(--text);
 }
-
-.dot.active {
-  background: #4a9eff;
-}
+.dot.active { background: #4a9eff; }
 
 .social-links--row {
   flex-direction: row;
@@ -415,10 +406,7 @@ h1 span { color: #4a9eff; }
     gap: 1.5rem;
   }
 
-  .hero-photo {
-    max-width: 380px;
-  }
-
+  .hero-photo,
   .news-carousel {
     max-width: 380px;
   }
@@ -428,100 +416,50 @@ h1 span { color: #4a9eff; }
    MOBILE (max-width: 768px)
    ============================================================ */
 @media (max-width: 768px) {
-  .container {
-    padding: 0 1.25rem;
-  }
+  .container { padding: 0 1.25rem; }
 
-  .navbar {
-    padding: 1rem 0;
-  }
+  .navbar { padding: 1rem 0; }
 
-  .navbar .container {
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.5rem;
-  }
-
-  .hub-nav {
-    margin-left: auto;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    gap: 0.5rem;
-  }
+  .hub-nav { gap: 0.5rem; }
 
   .nav-btn {
     padding: 0.5rem 1rem;
     font-size: 0.8rem;
   }
 
-  /* Dropdowns que se salen por la derecha abren hacia la izquierda */
   .nav-dropdown:last-child .dropdown-panel {
     left: auto;
     right: 0;
   }
 
-  h1 {
-    font-size: clamp(1.75rem, 3vw, 2.5rem);
-  }
+  h1 { font-size: clamp(1.75rem, 3vw, 2.5rem); }
 
-  .hero-photo {
-    max-width: 100%;
-  }
+  .hero-photo,
+  .news-carousel { max-width: 100%; }
 
-  .news-carousel {
-    max-width: 100%;
-  }
+  .hub-main { padding: 1rem 0; }
 
-  .hub-main {
-    padding: 1rem 0;
-  }
-
-  .social-links {
-    flex-direction: row;
-  }
+  .social-links { flex-direction: row; }
 }
 
 /* ============================================================
    MOBILE PEQUEÑO (max-width: 480px)
    ============================================================ */
 @media (max-width: 480px) {
-  .container {
-    padding: 0 1rem;
-  }
+  .container { padding: 0 1rem; }
 
-  .navbar {
-    padding: 0.75rem 0;
-  }
+  .navbar { padding: 0.75rem 0; }
 
-  .navbar .container {
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.5rem;
-  }
+  .brand { font-size: 1.25rem; }
 
-  .brand {
-    font-size: 1.25rem;
-  }
-
-  .hub-nav {
-    margin-left: auto;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    gap: 0.4rem;
-  }
+  .hub-nav { gap: 0.4rem; }
 
   .nav-btn {
     padding: 0.45rem 0.85rem;
     font-size: 0.75rem;
   }
 
-  .dropdown-panel {
-    min-width: 140px;
-  }
+  .dropdown-panel { min-width: 140px; }
 
   .nav-dropdown:last-child .dropdown-panel {
     left: auto;
@@ -543,11 +481,7 @@ h1 span { color: #4a9eff; }
     margin: 1rem 0;
   }
 
-  .hero-photo-wrap .news-title {
-    font-size: 1.1rem;
-    margin-bottom: 0.75rem;
-  }
-
+  .hero-photo-wrap .news-title,
   .news-title {
     font-size: 1.1rem;
     margin-bottom: 0.75rem;
@@ -581,22 +515,15 @@ h1 span { color: #4a9eff; }
     gap: 0.75rem;
   }
 
-  .social-item {
-    font-size: 0.8rem;
-  }
+  .social-item { font-size: 0.8rem; }
 
   .footer {
     margin-top: 1rem;
     padding: 0.75rem 0;
   }
 
-  .footer-inner {
-    gap: 0.35rem;
-  }
-
-  .footer-inner p {
-    font-size: 0.8rem;
-  }
+  .footer-inner { gap: 0.35rem; }
+  .footer-inner p { font-size: 0.8rem; }
 
   .hub-main {
     padding: 0.75rem 0 0.5rem;
@@ -608,32 +535,20 @@ h1 span { color: #4a9eff; }
    MÓVIL MUY PEQUEÑO (max-width: 380px)
    ============================================================ */
 @media (max-width: 380px) {
-  .container {
-    padding: 0 0.75rem;
-  }
+  .container { padding: 0 0.75rem; }
 
-  .brand {
-    font-size: 1.1rem;
-  }
+  .brand { font-size: 1.1rem; }
 
-  .hub-nav {
-    gap: 0.35rem;
-  }
+  .hub-nav { gap: 0.35rem; }
 
   .nav-btn {
     padding: 0.4rem 0.65rem;
     font-size: 0.7rem;
   }
 
-  h1 {
-    font-size: clamp(1.25rem, 4vw, 1.75rem);
-  }
+  h1 { font-size: clamp(1.25rem, 4vw, 1.75rem); }
 
-  .intro-label {
-    font-size: 0.65rem;
-  }
+  .intro-label { font-size: 0.65rem; }
 
-  .footer-inner p {
-    font-size: 0.75rem;
-  }
+  .footer-inner p { font-size: 0.75rem; }
 }
