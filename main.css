@@ -534,21 +534,20 @@ h1 span { color: #4a9eff; }
 /* ============================================================
    MÓVIL MUY PEQUEÑO (max-width: 380px)
    ============================================================ */
-@media (max-width: 380px) {
-  .container { padding: 0 0.75rem; }
-
-  .brand { font-size: 1.1rem; }
-
-  .hub-nav { gap: 0.35rem; }
-
-  .nav-btn {
-    padding: 0.4rem 0.65rem;
-    font-size: 0.7rem;
+@media (max-width: 768px) {
+  .navbar-inner {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    flex-wrap: wrap !important;
   }
 
-  h1 { font-size: clamp(1.25rem, 4vw, 1.75rem); }
-
-  .intro-label { font-size: 0.65rem; }
-
-  .footer-inner p { font-size: 0.75rem; }
+  .hub-nav {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: flex-end !important;
+    margin-left: auto !important;
+    gap: 0.5rem !important;
+  }
 }
