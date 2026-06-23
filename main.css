@@ -36,8 +36,11 @@ body {
 }
 .navbar .container {
   display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
+  gap: 0.5rem;
 }
 .brand {
   font-weight: 900;
@@ -105,13 +108,11 @@ h1 span { color: #4a9eff; }
   color: white;
   border: 1px solid var(--text);
 }
-
 .btn-light {
   background: transparent;
   color: var(--text);
   border: 1.5px solid var(--text);
 }
-
 .btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0,0,0,0.05);
@@ -139,9 +140,6 @@ h1 span { color: #4a9eff; }
   height: 20px;
   flex: 0 0 20px;
   display: block;
-}
-
-.social-item svg {
   overflow: visible;
   max-width: none;
   max-height: none;
@@ -175,7 +173,6 @@ h1 span { color: #4a9eff; }
   color: var(--muted);
   font-size: 0.9rem;
 }
-
 .footer-inner {
   display: flex;
   flex-direction: column;
@@ -187,13 +184,14 @@ h1 span { color: #4a9eff; }
 .footer .social-links { margin: 0; }
 
 /* ============================================================
-   ESTILOS DE NAVEGACIÓN (HUB DE BOTONES)
+   NAVEGACIÓN
    ============================================================ */
 
 .hub-nav {
   display: flex;
   gap: 1.5rem;
   align-items: center;
+  margin-left: auto;
 }
 
 .nav-dropdown {
@@ -268,7 +266,7 @@ h1 span { color: #4a9eff; }
 }
 
 /* ============================================================
-   ESTILOS DEL HUB PRINCIPAL
+   HUB PRINCIPAL
    ============================================================ */
 
 .hub-main {
@@ -285,333 +283,40 @@ h1 span { color: #4a9eff; }
 }
 
 /* ============================================================
-   TABLET (851px - 1024px)
-   ============================================================ */
-@media (max-width: 850px) {
-  .hero-content {
-    display: flex;
-    flex-direction: column-reverse;
-    text-align: center;
-    gap: 3rem;
-  }
-  .frame {
-    max-width: 300px;
-    box-shadow: 15px 15px 0 var(--primary);
-  }
-  .description { margin: 0 auto 2.5rem auto; }
-  .cta-row { justify-content: center; }
-  .social-links { align-items: center; }
-
-  .hero-content-grid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-
-  .hero-photo {
-    width: 350px;
-    height: 350px;
-  }
-
-  .news-carousel {
-    max-width: 350px;
-    height: 350px;
-  }
-
-  .hub-nav {
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
-
-  .nav-btn {
-    padding: 0.5rem 1rem;
-    font-size: 0.8rem;
-  }
-
-  .dropdown-panel {
-    min-width: 160px;
-  }
-}
-
-/* ============================================================
-   MOBILE LANDSCAPE / SMALL TABLET (769px - 850px)
-   ============================================================ */
-@media (max-width: 768px) {
-  .container {
-    padding: 0 1.5rem;
-  }
-
-  .navbar {
-    padding: 1rem 0;
-  }
-
-  .navbar .container {
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
-
-  h1 {
-    font-size: clamp(1.75rem, 3vw, 2.5rem);
-  }
-
-  .hero-photo {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 1 / 1;
-    max-width: 300px;
-  }
-
-  .news-carousel {
-    width: 100%;
-    max-width: 300px;
-    height: 300px;
-  }
-
-  .hub-main {
-    padding: 1rem 0;
-  }
-
-  .social-links {
-    flex-direction: row;
-  }
-}
-
-/* ============================================================
-   MOBILE (481px - 768px)
-   ============================================================ */
-@media (max-width: 480px) {
-  .container {
-    padding: 0 1rem;
-  }
-
-  .navbar {
-    padding: 1rem 0;
-  }
-
-  .brand {
-    font-size: 1.25rem;
-  }
-
-  .navbar .container {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .hub-nav {
-    width: 100%;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-  }
-
-  .nav-btn {
-    padding: 0.45rem 0.85rem;
-    font-size: 0.75rem;
-  }
-
-  .dropdown-panel {
-    min-width: 140px;
-    left: auto;
-    right: 0;
-  }
-
-  h1 {
-    font-size: clamp(1.5rem, 5vw, 2rem);
-    margin-bottom: 1rem;
-  }
-
-  .intro-label {
-    font-size: 0.7rem;
-    margin-bottom: 0.75rem;
-  }
-
-  .description {
-    font-size: 1rem;
-  }
-
-  .hero-content-grid {
-    gap: 1rem;
-    margin: 1rem 0;
-  }
-
-  .hero-photo {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 1 / 1;
-    max-width: 100%;
-    border-width: 3px;
-  }
-
-  .hero-photo-wrap .news-title {
-    font-size: 1.1rem;
-    margin-bottom: 0.75rem;
-  }
-
-  .news-carousel {
-    width: 100%;
-    max-width: 100%;
-    height: 250px;
-    border-width: 3px;
-  }
-
-  .news-title {
-    font-size: 1.1rem;
-    margin-bottom: 0.75rem;
-  }
-
-  .carousel-dots {
-    gap: 0.5rem;
-    margin-top: 0.75rem;
-  }
-
-  .dot {
-    width: 8px;
-    height: 8px;
-  }
-
-  .cta-row {
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .btn {
-    width: 100%;
-    text-align: center;
-    padding: 0.7rem 1.5rem;
-    font-size: 0.85rem;
-  }
-
-  .social-links {
-    flex-direction: row;
-    justify-content: center;
-    gap: 0.75rem;
-  }
-
-  .social-item {
-    font-size: 0.8rem;
-  }
-
-  .footer {
-    margin-top: 1rem;
-    padding: 0.75rem 0;
-  }
-
-  .footer-inner {
-    gap: 0.35rem;
-  }
-
-  .footer-inner p {
-    font-size: 0.8rem;
-  }
-
-  .hub-main {
-    padding: 1rem 0 0.5rem 0;
-    text-align: center;
-  }
-}
-
-/* ============================================================
-   SMALL PHONE (max-width: 380px)
-   ============================================================ */
-@media (max-width: 380px) {
-  .container {
-    padding: 0 0.75rem;
-  }
-
-  .brand {
-    font-size: 1.1rem;
-  }
-
-  .hub-nav {
-    gap: 0.5rem;
-  }
-
-  .nav-btn {
-    padding: 0.4rem 0.7rem;
-    font-size: 0.7rem;
-  }
-
-  h1 {
-    font-size: clamp(1.25rem, 4vw, 1.75rem);
-  }
-
-  .intro-label {
-    font-size: 0.65rem;
-  }
-
-  .hero-photo {
-    height: auto;
-    max-width: 100%;
-  }
-
-  .news-carousel {
-    height: 200px;
-  }
-
-  .footer-inner p {
-    font-size: 0.75rem;
-  }
-}
-
-/* ============================================================
    HERO PHOTO + NEWS PANEL
    ============================================================ */
+
 .hero-content-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2.5rem;
   align-items: center;
-  margin: 1.5rem 0 2rem 0;
+  margin: 1.5rem auto 2rem auto;
   max-width: 1000px;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .hero-photo-wrap {
-  position: static;
-  top: auto;
-  left: auto;
-  transform: none;
-  z-index: auto;
-  width: auto;
   color: var(--text);
-  text-shadow: none;
-  background: transparent;
-  padding: 0;
-  border-radius: 0;
-  font-size: 1.3rem;
-  line-height: 1.2;
-  max-width: none;
   margin-bottom: 1rem;
 }
 
 .hero-photo-wrap .news-title {
-  position: static;
-  top: auto;
-  left: auto;
-  transform: none;
-  z-index: auto;
-  width: auto;
   color: var(--text);
-  text-shadow: none;
-  background: transparent;
-  padding: 0;
-  border-radius: 0;
   font-size: 1.3rem;
   line-height: 1.2;
-  max-width: none;
   margin-bottom: 1rem;
 }
 
 .hero-photo {
-  width: 450px;
-  height: 450px;
-  max-width: 100%;
+  width: 100%;
+  max-width: 450px;
+  aspect-ratio: 1 / 1;
   border-radius: 12px;
   border: 4px solid #ffffff;
   box-shadow: 0 8px 24px rgba(74, 158, 255, 0.2);
   object-fit: cover;
 }
 
-/* News Panel */
 .news-panel {
   display: flex;
   flex-direction: column;
@@ -631,7 +336,7 @@ h1 span { color: #4a9eff; }
   position: relative;
   width: 100%;
   max-width: 450px;
-  height: 450px;
+  aspect-ratio: 1 / 1;
   border-radius: 8px;
   overflow: hidden;
   border: 3px solid #ffffff;
@@ -687,65 +392,248 @@ h1 span { color: #4a9eff; }
   gap: 1rem;
 }
 
-/* === RESPONSIVE FIXES === */
+/* ============================================================
+   TABLET (max-width: 850px)
+   ============================================================ */
+@media (max-width: 850px) {
+  .hero-content {
+    display: flex;
+    flex-direction: column-reverse;
+    text-align: center;
+    gap: 3rem;
+  }
+  .frame {
+    max-width: 300px;
+    box-shadow: 15px 15px 0 var(--primary);
+  }
+  .description { margin: 0 auto 2.5rem auto; }
+  .cta-row { justify-content: center; }
+  .social-links { align-items: center; }
 
-/* Grid colapsa en 768px en vez de 850px */
-@media (max-width: 768px) {
   .hero-content-grid {
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
 
-  /* Foto principal: ocupa todo el ancho, altura proporcional */
   .hero-photo {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 1 / 1;
-    max-width: 100%;
+    max-width: 380px;
   }
 
-  /* Carrusel: ídem */
   .news-carousel {
-    width: 100%;
-    max-width: 100%;
-    height: auto;
-    aspect-ratio: 1 / 1;
-    min-height: 240px;
+    max-width: 380px;
+  }
+}
+
+/* ============================================================
+   MOBILE (max-width: 768px)
+   ============================================================ */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 1.25rem;
   }
 
-  /* Navbar: brand arriba, nav abajo */
+  .navbar {
+    padding: 1rem 0;
+  }
+
   .navbar .container {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.75rem;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
   }
 
   .hub-nav {
-    width: 100%;
+    margin-left: auto;
     flex-wrap: wrap;
-    gap: 0.6rem;
+    justify-content: flex-end;
+    gap: 0.5rem;
   }
 
-  /* Último dropdown abre hacia la izquierda para no salirse */
+  .nav-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+  }
+
+  /* Dropdowns que se salen por la derecha abren hacia la izquierda */
   .nav-dropdown:last-child .dropdown-panel {
     left: auto;
     right: 0;
   }
+
+  h1 {
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+  }
+
+  .hero-photo {
+    max-width: 100%;
+  }
+
+  .news-carousel {
+    max-width: 100%;
+  }
+
+  .hub-main {
+    padding: 1rem 0;
+  }
+
+  .social-links {
+    flex-direction: row;
+  }
 }
 
+/* ============================================================
+   MOBILE PEQUEÑO (max-width: 480px)
+   ============================================================ */
 @media (max-width: 480px) {
-  /* Carrusel altura mínima reducida en pantallas muy pequeñas */
-  .news-carousel {
-    min-height: 200px;
+  .container {
+    padding: 0 1rem;
   }
 
-  /* Hub main centrado y con menos padding */
-  .hub-main {
-    padding: 0.75rem 0 0.5rem;
+  .navbar {
+    padding: 0.75rem 0;
   }
 
-  /* Título más compacto */
+  .navbar .container {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  .brand {
+    font-size: 1.25rem;
+  }
+
+  .hub-nav {
+    margin-left: auto;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.4rem;
+  }
+
+  .nav-btn {
+    padding: 0.45rem 0.85rem;
+    font-size: 0.75rem;
+  }
+
+  .dropdown-panel {
+    min-width: 140px;
+  }
+
+  .nav-dropdown:last-child .dropdown-panel {
+    left: auto;
+    right: 0;
+  }
+
   h1 {
     font-size: clamp(1.4rem, 5vw, 2rem);
+    margin-bottom: 1rem;
+  }
+
+  .intro-label {
+    font-size: 0.7rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .hero-content-grid {
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+
+  .hero-photo-wrap .news-title {
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .news-title {
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .carousel-dots {
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+  }
+
+  .cta-row {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .btn {
+    width: 100%;
+    text-align: center;
+    padding: 0.7rem 1.5rem;
+    font-size: 0.85rem;
+  }
+
+  .social-links {
+    flex-direction: row;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+
+  .social-item {
+    font-size: 0.8rem;
+  }
+
+  .footer {
+    margin-top: 1rem;
+    padding: 0.75rem 0;
+  }
+
+  .footer-inner {
+    gap: 0.35rem;
+  }
+
+  .footer-inner p {
+    font-size: 0.8rem;
+  }
+
+  .hub-main {
+    padding: 0.75rem 0 0.5rem;
+    text-align: center;
+  }
+}
+
+/* ============================================================
+   MÓVIL MUY PEQUEÑO (max-width: 380px)
+   ============================================================ */
+@media (max-width: 380px) {
+  .container {
+    padding: 0 0.75rem;
+  }
+
+  .brand {
+    font-size: 1.1rem;
+  }
+
+  .hub-nav {
+    gap: 0.35rem;
+  }
+
+  .nav-btn {
+    padding: 0.4rem 0.65rem;
+    font-size: 0.7rem;
+  }
+
+  h1 {
+    font-size: clamp(1.25rem, 4vw, 1.75rem);
+  }
+
+  .intro-label {
+    font-size: 0.65rem;
+  }
+
+  .footer-inner p {
+    font-size: 0.75rem;
   }
 }
