@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Newspaper BudyPeek</title>
+    <style>
+      :root{
+        --bg:#0d0f12;
+        --bg-soft:#15181c;
+        --accent:#4a9eff;
+        --text:#eaeaea;
+        --muted:#9aa0a6;
+        --border:#22262b;
+      }
+      *{box-sizing:border-box;margin:0;padding:0;}
+      body{
+        background:var(--bg);
+        color:var(--text);
+        font-family:'Segoe UI',Arial,sans-serif;
+        line-height:1.6;
+      }
+
+      /* Cabecera Fija del Portal */
+      header{
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        padding:14px 30px;
+        background:var(--bg-soft);
+        border-bottom:2px solid var(--accent);
+        position:sticky;
+        top:0;
+        z-index:10;
+      }
+      .logo{font-weight:800;font-size:1.4rem;letter-spacing:1px;color:var(--accent);text-transform:uppercase;}
+      nav{display:flex;gap:22px;flex-wrap:wrap;}
+      nav a{
+        color:var(--text);
+        text-decoration:none;
+        font-size:.85rem;
+        font-weight:600;
+        text-transform:uppercase;
+        letter-spacing:.5px;
+        transition:color .2s;
+      }
+      nav a:hover{color:var(--accent);}
+
+      /* Ticker de última hora */
+      .ticker{
+        background:var(--accent);
+        color:#fff;
+        font-weight:700;
+        font-size:.85rem;
+        padding:8px 20px;
+        white-space:nowrap;
+        overflow:hidden;
+        text-overflow: ellipsis;
+      }
+      .ticker span{text-transform:uppercase;margin-right:10px;}
+
+      /* Contenedor Principal */
+      main{max-width:1100px;margin:0 auto;padding:30px 20px 60px;}
+
+      /* Bloque de Portada / Imagen Destacada */
+      .featured{
+        display:block;
+        position:relative;
+        border-radius:10px;
+        overflow:hidden;
+        margin-bottom:30px;
+        border:1px solid var(--border);
+        box-shadow:0 0 30px rgba(74, 158, 255, 0.15);
+      }
+      .featured img{width:100%;height:420px;object-fit:cover;display:block;filter:brightness(.65);}
+      .featured__caption{
+        position:absolute;
+        bottom:0;
+        left:0;
+        right:0;
+        padding:30px 25px;
+        background:linear-gradient(180deg,transparent,rgba(13,15,18,1));
+      }
+      .featured__caption .tag{color:var(--accent);font-weight:700;text-transform:uppercase;font-size:.85rem;letter-spacing:1px;}
+      .featured__caption h1{font-size:2rem;margin-top:8px;color:#fff;font-weight:800;line-height:1.2;}
+
+      /* Estructura de la Noticia */
+      .article-layout {
+        display: grid;
+        grid-template-columns: 3fr 1fr;
+        gap: 30px;
+        margin-top: 20px;
+      }
+      @media (max-width: 900px) {
+        .article-layout {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* Contenido del Artículo */
+      .sub-headline {
+        font-size: 1.15rem;
+        color: var(--muted);
+        line-height: 1.5;
+        margin-bottom: 25px;
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 20px;
+      }
+      .meta-info {
+        font-size: 0.85rem;
+        color: var(--muted);
+        margin-bottom: 25px;
+        background: var(--bg-soft);
+        padding: 12px 20px;
+        border-radius: 6px;
+        border: 1px solid var(--border);
+      }
+      .meta-info .author {
+        color: var(--accent);
+        font-weight: bold;
+      }
+      .article-body p {
+        margin-bottom: 20px;
+        font-size: 1.05rem;
+        color: #dfdfdf;
+        text-align: justify;
+      }
+
+      /* Barra Lateral con Componentes */
+      .sidebar h2 {
+        font-size:1.1rem;
+        text-transform:uppercase;
+        letter-spacing:1px;
+        color:var(--accent);
+        border-left:4px solid var(--accent);
+        padding-left:10px;
+        margin-bottom:18px;
+      }
+      .tags-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .tags-list li {
+        background: var(--bg-soft);
+        border: 1px solid var(--border);
+        padding: 10px 15px;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        transition: border-color .15s;
+      }
+      .tags-list li:hover {
+        border-color: var(--accent);
+        color: var(--accent);
+        cursor: pointer;
+      }
+      .tags-list li a {
+    color: var(--text);
+    text-decoration: none; /* Quita el subrayado por defecto */
+    display: block;        /* Hace que todo el recuadro sea clicleable */
+    width: 100%;
+    transition: color .15s;
+}
+.tags-list li:hover a {
+    color: var(--accent);
+}
+
+      /* Pie de página */
+      footer{
+        text-align:center;
+        padding:25px;
+        background:var(--bg-soft);
+        border-top:2px solid var(--accent);
+        color:var(--muted);
+        font-size:.85rem;
+        margin-top: 40px;
+      }
+      footer a{color:var(--accent);text-decoration:none;}
+    </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">BP</div>
+  <nav>
+    <a href="https://budypeek.github.io" target="_blank">Inicio</a>
+    <a target="_blank">Clips</a>
+    <a href="product-page.html" target="_blank">Merch</a>
+    <a href="https://www.instagram.com/budypeekfc/" target="_blank">Socials</a>
+    <a href="https://www.instagram.com/elburladerobar/" target="_blank">Burladero</a>
+  </nav>
+</header>
+
+<div class="ticker">
+    <span>ÚLTIMA HORA:</span>Kowiwo y Yovo son abucheados por su afición trás besarse en la final de la ESL.
+</div>
+
+<main>
+
+    <!-- Sección de Portada con Imagen Integrada -->
+    <div class="featured">
+        <img src="https://files.catbox.moe/bswzyv.jpg" alt="BudyPeek Team" />
+        <div class="featured__caption">
+            <div class="tag">Plantilla — Caso Krackene</div>
+            <h1>Nuestro jugador "Krackene" se ve obligado a abandonar el equipo temporalmente debido a su operación de fimosis.”</h1>
+        </div>
+    </div>
+
+    <!-- Distribución de la noticia con barra lateral del portal -->
+    <div class="article-layout">
+        
+        <section class="content-area">
+            <div class="sub-headline">
+                “Sin capucha hay más aerodinamica”, afirmó el jugador Krackene al terminar su operación de fimosis, que le obligará a estar fuera de la competición durante un tiempo.
+            </div>
+
+            <div class="meta-info">
+                Por <span class="author">Maxibon</span> | Publicado el <time datetime="2026-06-23T15:14:53+02:00">23 de junio de 2026 a las 15:14</time>
+            </div>
+
+            <article class="article-body">
+                <p>Incertidumbre en el entorno competitivo: "Krackene" pausa su carrera por motivos de salud
+                    La escena profesional de los deportes electrónicos ha recibido esta mañana una noticia inesperada que afecta directamente a la alineación titular del equipo. el jugador conocido profesionalmente como "Krackene" se verá obligado a apartarse de la competición de manera temporal.
+                    </p>
+
+                <p><b>Una pausa necesaria.</b> Según la información facilitada por la organización, el cese de la actividad del jugador responde estrictamente a motivos de salud. "Krackene" deberá someterse a una intervención quirúrgica para tratar una fimosis, un procedimiento médico que, aunque común, requiere un periodo de recuperación y descanso posterior que es incompatible con el exigente ritmo de entrenamiento y los torneos de alto nivel.
+                El equipo ha emitido un comunicado breve pero contundente, mostrando su pleno apoyo al jugador en este proceso de recuperación. La prioridad de la entidad es asegurar que su deportista pueda volver en plenas facultades físicas y mentales una vez finalizado el postoperatorio.</p>
+                
+                <p><b>Impacto en la estrategia del equipo.</b>
+                    La baja de "Krackene", una pieza clave en el esquema estratégico actual, supone un desafío logístico para el cuerpo técnico. A corto plazo, el club ya se encuentra evaluando las distintas opciones para cubrir su ausencia en las próximas competiciones, buscando minimizar el impacto en el rendimiento colectivo durante las semanas que dure esta baja médica.
+                    Desde la directiva han apelado a la comprensión de la afición y han pedido respeto hacia la privacidad del jugador durante este periodo de convalecencia. Por el momento, no se ha establecido una fecha exacta para su reincorporación, supeditando su retorno a la evolución favorable de su estado de salud tras la operación.</p>
+
+                <p>Desde la directiva han apelado a la comprensión de la afición y han pedido respeto hacia la privacidad del jugador durante este periodo de convalecencia. Por el momento, no se ha establecido una fecha exacta para su reincorporación, supeditando su retorno a la evolución favorable de su estado de salud tras la operación.</p>
+
+                <p>¿Te gustaría que redactara una nota de prensa oficial basada en este enfoque o prefieres que profundice en el impacto que esta baja tendría en la clasificación del equipo?</p>
+            </article>
+        </section>
+
+        <!-- Barra lateral adaptada -->
+        <aside class="sidebar">
+    <h2>Temas Relacionados</h2>
+    <ul class="tags-list">
+        <li><a href="https://www.instagram.com/budypeekfc/" target="_blank"># Sesión de fotos BudyPeek</a></li>
+        <li><a href="https://files.catbox.moe/oe1fo0.png" target="_blank"># Pibardos Podcast</a></li>
+        <li><a href="https://files.catbox.moe/f21dgs.jpeg" target="_blank"># BudyPeek Champions</a></li>
+        <li><a href="https://www.instagram.com/elburladerobar/" target="_blank"># BurladeroBar</a></li>
+    </ul>
+</aside>
+        
+    </div>
+
+</main>
+
+<footer>
+© 2026 — BudyPeek Newspaper, estilo inspirado en <a href="#">BudyPeek</a>
+</footer>
+
+</body>
+</html>
