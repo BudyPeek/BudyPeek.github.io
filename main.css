@@ -686,3 +686,66 @@ h1 span { color: #4a9eff; }
   flex-direction: row;
   gap: 1rem;
 }
+
+/* === RESPONSIVE FIXES === */
+
+/* Grid colapsa en 768px en vez de 850px */
+@media (max-width: 768px) {
+  .hero-content-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  /* Foto principal: ocupa todo el ancho, altura proporcional */
+  .hero-photo {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    max-width: 100%;
+  }
+
+  /* Carrusel: ídem */
+  .news-carousel {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+    min-height: 240px;
+  }
+
+  /* Navbar: brand arriba, nav abajo */
+  .navbar .container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .hub-nav {
+    width: 100%;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  /* Último dropdown abre hacia la izquierda para no salirse */
+  .nav-dropdown:last-child .dropdown-panel {
+    left: auto;
+    right: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Carrusel altura mínima reducida en pantallas muy pequeñas */
+  .news-carousel {
+    min-height: 200px;
+  }
+
+  /* Hub main centrado y con menos padding */
+  .hub-main {
+    padding: 0.75rem 0 0.5rem;
+  }
+
+  /* Título más compacto */
+  h1 {
+    font-size: clamp(1.4rem, 5vw, 2rem);
+  }
+}
