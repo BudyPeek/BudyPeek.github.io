@@ -258,7 +258,7 @@
   © 2026 — BudyPeek Newspaper, estilo inspirado en <a href="https://budypeek.github.io" target="_blank">BudyPeek</a>
 </footer>
 
-<!-- ===== CHAT WIDGET ===== -->
+<!-- ===== CHAT WIDGET NO TOCAR ===== -->
 <button id="chat-toggle" aria-label="Abrir chat">
   💬<span id="chat-badge">0</span>
 </button>
@@ -326,6 +326,7 @@
       unread = 0;
       badgeEl.style.display='none';
       inputEl.focus();
+
       // Scroll al último mensaje al abrir el panel
       setTimeout(() => {
         messagesEl.scrollTop = messagesEl.scrollHeight;
