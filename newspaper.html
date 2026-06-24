@@ -277,8 +277,6 @@
   </div>
 </div>
 
-<!-- Firebase: necesario para que el chat se vea en tiempo real entre TODOS los visitantes.
-     Sustituye el firebaseConfig de abajo por el de tu propio proyecto (gratis) en https://console.firebase.google.com -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
   import {
@@ -305,7 +303,6 @@
   const closeBtn = document.getElementById('chat-close');
   const badgeEl = document.getElementById('chat-badge');
 
-  // ---- Identidad anónima persistente por navegador ----
   const COLORS = ['#4a9eff','#ff6b6b','#6bff8e','#ffd166','#c77dff','#ff8e72','#7afcff','#ff5fa2'];
   function randomId(){ return Math.random().toString(36).slice(2,7); }
 
@@ -325,7 +322,15 @@
   toggleBtn.addEventListener('click', ()=>{
     panelOpen = !panelOpen;
     panelEl.classList.toggle('open', panelOpen);
-    if(panelOpen){ unread = 0; badgeEl.style.display='none'; inputEl.focus(); }
+    if(panelOpen){
+      unread = 0;
+      badgeEl.style.display='none';
+      inputEl.focus();
+      // Scroll al último mensaje al abrir el panel
+      setTimeout(() => {
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+      }, 50);
+    }
   });
   closeBtn.addEventListener('click', ()=>{
     panelOpen = false;
@@ -365,7 +370,6 @@
     statusEl.textContent = '';
   }catch(e){
     statusEl.textContent = '⚠ Chat en modo local (configura Firebase para tiempo real entre usuarios)';
-    // Fallback: chat solo local, guardado en localStorage para que no se pierda al recargar
     const local = JSON.parse(localStorage.getItem('bp_chat_local') || '[]');
     local.forEach(renderMessage);
   }

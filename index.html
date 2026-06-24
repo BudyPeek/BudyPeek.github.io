@@ -46,17 +46,19 @@
       <p class="intro-label">Bienvenido</p>
       <h1>BudyPeek Official Web<span>.</span></h1>
 
+        <!-- FOTO IZQUIERDA -->
       <div class="hero-content-grid">
         <div class="hero-photo-wrap">
           <h3 class="news-title">ESL CS2 Major Katowice 2026 Champs</h3>
           <img src="https://files.catbox.moe/rabqkl.png" alt="Foto principal" class="hero-photo" />
         </div>
 
+        <!-- FOTOS CARRUSEL -->
         <div class="news-panel">
           <h3 class="news-title">Latest News:</h3>
           <div class="news-carousel">
             <a href="product-page.html" class="news-item active" style="background-image: url('https://files.catbox.moe/tloyzf.jpeg')"></a>
-            <a href="/subwebs/Podcast.html" class="news-item" style="background-image: url('https://files.catbox.moe/e1vak9.png')"></a>
+            <a class="news-item" style="background-image: url('https://files.catbox.moe/b0ahwz.jpeg')"></a>
             <a href="https://www.instagram.com/elburladerobar/" target="_blank" class="news-item" style="background-image: url('https://files.catbox.moe/mmqyv3.jpg')"></a>
           </div>
           <div class="carousel-dots">
@@ -193,6 +195,144 @@
       });
 
       startCarousel();
+
     </script>
+
+    <!-- ===== CHAT WIDGET ===== -->
+<button id="chat-toggle" aria-label="Abrir chat">
+  💬<span id="chat-badge">0</span>
+</button>
+
+<div id="chat-panel">
+  <div id="chat-header">
+    BudyPeek Chat
+    <small id="chat-username-label">Conectando...</small>
+    <button id="chat-close" aria-label="Cerrar">✕</button>
+  </div>
+  <div id="chat-messages"></div>
+  <div id="chat-status"></div>
+  <div id="chat-input-row">
+    <input id="chat-input" type="text" maxlength="300" placeholder="Escribe un mensaje..." />
+    <button id="chat-send">Enviar</button>
+  </div>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import {
+    getDatabase, ref, push, onChildAdded, query, limitToLast
+  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyA6ev8wtXgs1u3HauCMSQjR1Oofn66E94g",
+    authDomain: "budypeek-chat.firebaseapp.com",
+    databaseURL: "https://budypeek-chat-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "budypeek-chat",
+    storageBucket: "budypeek-chat.firebasestorage.app",
+    messagingSenderId: "46264310345",
+    appId: "1:46264310345:web:11046f339eb9e188997d98"
+  };
+
+  const statusEl = document.getElementById('chat-status');
+  const usernameLabel = document.getElementById('chat-username-label');
+  const messagesEl = document.getElementById('chat-messages');
+  const inputEl = document.getElementById('chat-input');
+  const sendBtn = document.getElementById('chat-send');
+  const toggleBtn = document.getElementById('chat-toggle');
+  const panelEl = document.getElementById('chat-panel');
+  const closeBtn = document.getElementById('chat-close');
+  const badgeEl = document.getElementById('chat-badge');
+
+  const COLORS = ['#4a9eff','#ff6b6b','#6bff8e','#ffd166','#c77dff','#ff8e72','#7afcff','#ff5fa2'];
+  function randomId(){ return Math.random().toString(36).slice(2,7); }
+
+  let username = localStorage.getItem('bp_chat_username');
+  let usercolor = localStorage.getItem('bp_chat_color');
+  if(!username){
+    username = 'Anonimo_' + randomId();
+    usercolor = COLORS[Math.floor(Math.random()*COLORS.length)];
+    localStorage.setItem('bp_chat_username', username);
+    localStorage.setItem('bp_chat_color', usercolor);
+  }
+  usernameLabel.textContent = 'Eres: ' + username;
+
+  let unread = 0;
+  let panelOpen = false;
+
+  toggleBtn.addEventListener('click', ()=>{
+    panelOpen = !panelOpen;
+    panelEl.classList.toggle('open', panelOpen);
+    if(panelOpen){
+      unread = 0;
+      badgeEl.style.display='none';
+      inputEl.focus();
+      // Scroll al último mensaje al abrir el panel
+      setTimeout(() => {
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+      }, 50);
+    }
+  });
+  closeBtn.addEventListener('click', ()=>{
+    panelOpen = false;
+    panelEl.classList.remove('open');
+  });
+
+  function renderMessage(data){
+    const div = document.createElement('div');
+    div.className = 'chat-msg' + (data.username === username ? ' mine' : '');
+    const time = data.timestamp ? new Date(data.timestamp).toLocaleTimeString('es-ES',{hour:'2-digit',minute:'2-digit'}) : '';
+    div.innerHTML = `<span class="author" style="color:${data.color || '#4a9eff'}">${escapeHtml(data.username)}<span class="time">${time}</span></span>${escapeHtml(data.text)}`;
+    messagesEl.appendChild(div);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+    if(data.username !== username && !panelOpen){
+      unread++;
+      badgeEl.textContent = unread;
+      badgeEl.style.display = 'flex';
+    }
+  }
+
+  function escapeHtml(str){
+    const d = document.createElement('div');
+    d.textContent = str;
+    return d.innerHTML;
+  }
+
+  let dbRef = null;
+  try{
+    if(firebaseConfig.apiKey === "TU_API_KEY"){
+      throw new Error("Firebase no configurado");
+    }
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    dbRef = ref(db, 'budypeek_chat');
+    const recentQuery = query(dbRef, limitToLast(50));
+    onChildAdded(recentQuery, (snap)=> renderMessage(snap.val()));
+    statusEl.textContent = '';
+  }catch(e){
+    statusEl.textContent = '⚠ Chat en modo local (configura Firebase para tiempo real entre usuarios)';
+    const local = JSON.parse(localStorage.getItem('bp_chat_local') || '[]');
+    local.forEach(renderMessage);
+  }
+
+  function sendMessage(){
+    const text = inputEl.value.trim();
+    if(!text) return;
+    const data = { username, color: usercolor, text, timestamp: Date.now() };
+
+    if(dbRef){
+      push(dbRef, data);
+    } else {
+      renderMessage(data);
+      const local = JSON.parse(localStorage.getItem('bp_chat_local') || '[]');
+      local.push(data);
+      localStorage.setItem('bp_chat_local', JSON.stringify(local.slice(-50)));
+    }
+    inputEl.value = '';
+  }
+
+  sendBtn.addEventListener('click', sendMessage);
+  inputEl.addEventListener('keydown', (e)=>{ if(e.key === 'Enter') sendMessage(); });
+</script>
+
   </body>
 </html>
