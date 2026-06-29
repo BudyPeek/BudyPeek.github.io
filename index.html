@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Bienvenido a la web oficial de BudyPeek. Encuentra aquí nuestro merch, los mejores highlights de CSGO, y las últimas noticias.">
     <title>BudyPeek Official</title>
     <link rel="icon" type="image/jpeg" href="budypeek.png" />
     <link rel="stylesheet" href="main.css" />
@@ -11,25 +12,24 @@
 
     <header class="navbar">
       <div class="container navbar-inner">
-        <a href="index.html" class="brand">BP<span></span></a>
+        <a href="https://budypeek.github.io" class="brand">BP<span></span></a>
 
         <nav class="hub-nav" style="margin-left: auto;">
           
           <div class="nav-dropdown">
             <button class="nav-btn" type="button">Newspaper</button>
             <div class="dropdown-panel">
-              <a href="newspaper.html">Latest</a>
+              <a href="/newspaper/index.html">Latest</a>
             </div>
           </div>
 
           <div class="nav-dropdown">
             <button class="nav-btn" type="button">BudyPeek</button>
             <div class="dropdown-panel">
-              <a href="product-page.html">Merch</a>
+              <a href="/shop/index.html">Merch</a>
             </div>
           </div>
 
-          <nav class="hub-nav" style="margin-left: auto;">
           <div class="nav-dropdown">
             <button class="nav-btn" type="button">CSGO</button>
             <div class="dropdown-panel">
@@ -48,27 +48,28 @@
 
         <!-- FOTO IZQUIERDA -->
       <div class="hero-content-grid">
-        <div class="hero-photo-wrap">
-          <h3 class="news-title">ESL CS2 Major Katowice 2026 Champs</h3>
-          <img src="https://files.catbox.moe/rabqkl.png" alt="Foto principal" class="hero-photo" />
-        </div>
-
-        <!-- FOTOS CARRUSEL -->
-        <div class="news-panel">
-          <h3 class="news-title">Latest News:</h3>
-          <div class="news-carousel">
-            <a href="product-page.html" class="news-item active" style="background-image: url('https://files.catbox.moe/tloyzf.jpeg')"></a>
-            <a class="news-item" style="background-image: url('https://files.catbox.moe/b0ahwz.jpeg')"></a>
-            <a href="https://www.instagram.com/elburladerobar/" target="_blank" class="news-item" style="background-image: url('https://files.catbox.moe/mmqyv3.jpg')"></a>
-          </div>
-          <div class="carousel-dots">
-            <span class="dot active" data-index="0"></span>
-            <span class="dot" data-index="1"></span>
-            <span class="dot" data-index="2"></span>
-          </div>
-        </div>
+      <div class="hero-photo-wrap">
+        <h3 class="news-title">Check our Newspaper:</h3>
+        <a href="/newspaper/index.html">
+          <img src="https://files.catbox.moe/lgj6kv.jpeg" alt="Foto principal" class="hero-photo" />
+        </a>
       </div>
-    </main>
+
+  <!-- CARRUSEL -->
+    <div class="news-panel">
+      <h3 class="news-title">Latest News:</h3>
+      <div class="news-carousel">
+        <a href="/shop/index.html" class="news-item active" style="background-image: url('https://files.catbox.moe/tloyzf.jpeg')"></a>
+        <a class="news-item" style="background-image: url('https://files.catbox.moe/b0ahwz.jpeg')"></a>
+        <a href="https://www.instagram.com/elburladerobar/" target="_blank" class="news-item" style="background-image: url('https://files.catbox.moe/mmqyv3.jpg')"></a>
+      </div>
+      <div class="carousel-dots">
+        <span class="dot active" data-index="0"></span>
+        <span class="dot" data-index="1"></span>
+        <span class="dot" data-index="2"></span>
+      </div>
+    </div>
+  </div>
 
     <footer class="footer container">
       <div class="footer-inner">
@@ -246,15 +247,35 @@
   const COLORS = ['#4a9eff','#ff6b6b','#6bff8e','#ffd166','#c77dff','#ff8e72','#7afcff','#ff5fa2'];
   function randomId(){ return Math.random().toString(36).slice(2,7); }
 
+  // ===== FIX DE SEGURIDAD PARA EVITAR CAMBIOS DE NOMBRE LOCALES =====
   let username = localStorage.getItem('bp_chat_username');
   let usercolor = localStorage.getItem('bp_chat_color');
-  if(!username){
+  let chatToken = localStorage.getItem('bp_chat_token');
+
+  function generarFirma(name, token) {
+    return btoa(name + "[salt]" + token).slice(0, 15);
+  }
+
+  let tokenValido = false;
+  if (username && chatToken) {
+    const firmaGuardada = localStorage.getItem('bp_chat_signature');
+    if (firmaGuardada === generarFirma(username, chatToken)) {
+      tokenValido = true;
+    }
+  }
+
+  if (!tokenValido) {
     username = 'Anonimo_' + randomId();
     usercolor = COLORS[Math.floor(Math.random()*COLORS.length)];
+    chatToken = randomId() + randomId();
+    
     localStorage.setItem('bp_chat_username', username);
     localStorage.setItem('bp_chat_color', usercolor);
+    localStorage.setItem('bp_chat_token', chatToken);
+    localStorage.setItem('bp_chat_signature', generarFirma(username, chatToken));
   }
   usernameLabel.textContent = 'Eres: ' + username;
+  // ===================================================================
 
   let unread = 0;
   let panelOpen = false;
@@ -267,7 +288,6 @@
       badgeEl.style.display='none';
       inputEl.focus();
       
-      // Scroll al último mensaje al abrir el panel
       setTimeout(() => {
         messagesEl.scrollTop = messagesEl.scrollHeight;
       }, 50);

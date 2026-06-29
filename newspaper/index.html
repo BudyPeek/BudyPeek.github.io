@@ -173,7 +173,7 @@
   <nav>
     <a href="https://budypeek.github.io">Inicio</a>
     <a href="#">Clips</a>
-    <a href="product-page.html">Merch</a>
+    <a href="../shop/index.html">Merch</a>
     <a href="https://www.instagram.com/budypeekfc/" target="_blank">Socials</a>
     <a href="https://www.instagram.com/elburladerobar/" target="_blank">Burladero</a>
   </nav>
@@ -198,7 +198,7 @@
     <div class="grid">
 
       <article class="story">
-        <a href="subwebs/Podcast.html">
+        <a href="../foro/podcast1/index.html">
           <div class="story__img" style="background-image:url('https://files.catbox.moe/oe1fo0.png')"></div>
           <h3>Volcan y Maxibon inauguran Pibardos Podcast con: "Is Robero a Pedophile?"
             <svg class="pin-icon" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
@@ -209,7 +209,7 @@
       </article>
 
       <article class="story">
-        <a href="subwebs/Krackene.html">
+        <a href="../foro/krackene/index.html">
           <div class="story__img" style="background-image:url('https://files.catbox.moe/jsr3b0.png')"></div>
           <h3>Nuestro jugador "Krackene" se ve obligado a abandonar el equipo temporalmente debido a su operación de fimosis.
             <svg class="pin-icon" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
@@ -282,7 +282,6 @@
   © 2026 — BudyPeek Newspaper, estilo inspirado en <a href="https://budypeek.github.io" target="_blank">BudyPeek</a>
 </footer>
 
-<!-- ===== CHAT WIDGET NO TOCAR ===== -->
 <button id="chat-toggle" aria-label="Abrir chat">
   💬<span id="chat-badge">0</span>
 </button>
@@ -304,7 +303,7 @@
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
   import {
-    getDatabase, ref, push, onChildAdded, query, limitToLast, serverTimestamp
+    getDatabase, ref, push, onChildAdded, query, limitToLast
   } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
   const firebaseConfig = {
@@ -330,15 +329,35 @@
   const COLORS = ['#4a9eff','#ff6b6b','#6bff8e','#ffd166','#c77dff','#ff8e72','#7afcff','#ff5fa2'];
   function randomId(){ return Math.random().toString(36).slice(2,7); }
 
+  // ===== FIX DE SEGURIDAD PARA EVITAR CAMBIOS DE NOMBRE LOCALES =====
   let username = localStorage.getItem('bp_chat_username');
   let usercolor = localStorage.getItem('bp_chat_color');
-  if(!username){
+  let chatToken = localStorage.getItem('bp_chat_token');
+
+  function generarFirma(name, token) {
+    return btoa(name + "[salt]" + token).slice(0, 15);
+  }
+
+  let tokenValido = false;
+  if (username && chatToken) {
+    const firmaGuardada = localStorage.getItem('bp_chat_signature');
+    if (firmaGuardada === generarFirma(username, chatToken)) {
+      tokenValido = true;
+    }
+  }
+
+  if (!tokenValido) {
     username = 'Anonimo_' + randomId();
     usercolor = COLORS[Math.floor(Math.random()*COLORS.length)];
+    chatToken = randomId() + randomId();
+    
     localStorage.setItem('bp_chat_username', username);
     localStorage.setItem('bp_chat_color', usercolor);
+    localStorage.setItem('bp_chat_token', chatToken);
+    localStorage.setItem('bp_chat_signature', generarFirma(username, chatToken));
   }
   usernameLabel.textContent = 'Eres: ' + username;
+  // ===================================================================
 
   let unread = 0;
   let panelOpen = false;
@@ -351,7 +370,6 @@
       badgeEl.style.display='none';
       inputEl.focus();
 
-      // Scroll al último mensaje al abrir el panel
       setTimeout(() => {
         messagesEl.scrollTop = messagesEl.scrollHeight;
       }, 50);
