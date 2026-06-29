@@ -588,8 +588,8 @@ h1 span { color: #4a9eff; }
 }
 #chat-messages::-webkit-scrollbar{width:6px;}
 #chat-messages::-webkit-scrollbar-thumb{background:#22262b;border-radius:3px;}
-.chat-msg{padding:7px 10px;border-radius:8px;background:#15181c;border:1px solid #22262b;max-width:88%;word-wrap:break-word;}
-.chat-msg .author{font-weight:700;font-size:.78rem;margin-bottom:2px;display:block;}
+.chat-msg{padding:7px 10px;border-radius:8px;background:#15181c;border:1px solid #22262b;max-width:88%;word-wrap:break-word;line-height:1.3;}
+.chat-msg .author{font-weight:700;font-size:.78rem;margin-bottom:1px;display:block;line-height:1.2;}
 .chat-msg .time{color:#9aa0a6;font-size:.65rem;margin-left:6px;font-weight:400;}
 .chat-msg.mine{align-self:flex-end;border-color:#4a9eff;}
 #chat-input-row{

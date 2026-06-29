@@ -128,8 +128,8 @@
   #chat-messages::-webkit-scrollbar{width:6px;}
   #chat-messages::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
 
-  .chat-msg{padding:7px 10px;border-radius:8px;background:var(--bg-soft);border:1px solid var(--border);max-width:88%;word-wrap:break-word;}
-  .chat-msg .author{font-weight:700;font-size:.78rem;margin-bottom:2px;display:block;}
+  .chat-msg{padding:7px 10px;border-radius:8px;background:var(--bg-soft);border:1px solid var(--border);max-width:88%;word-wrap:break-word;line-height:1.3;}
+  .chat-msg .author{font-weight:700;font-size:.78rem;margin-bottom:1px;display:block;line-height:1.2;}
   .chat-msg .time{color:var(--muted);font-size:.65rem;margin-left:6px;font-weight:400;}
   .chat-msg.mine{align-self:flex-end;border-color:var(--accent);}
 
@@ -350,7 +350,7 @@
     username = 'Anonimo_' + randomId();
     usercolor = COLORS[Math.floor(Math.random()*COLORS.length)];
     chatToken = randomId() + randomId();
-    
+
     localStorage.setItem('bp_chat_username', username);
     localStorage.setItem('bp_chat_color', usercolor);
     localStorage.setItem('bp_chat_token', chatToken);
